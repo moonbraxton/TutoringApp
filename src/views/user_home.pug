@@ -1,0 +1,76 @@
+block variables
+  - var title = 'To Do List - Home'
+doctype html
+html(lang='en')
+  head
+    title Login V1
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    link(rel='icon', type='image/png', href='/images/icons/favicon.ico')
+    link(rel='stylesheet', type='text/css', href='/vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/animate/animate.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/css-hamburgers/hamburgers.min.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/select2/select2.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/util.css')
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js", integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM", crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js", integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o", crossorigin="anonymous")
+
+    link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+    title #{title}
+  body    
+   .limiter
+    .container-login100
+     .wrap-login100(style="min-width: 753px; min-height: 860px; display: block; width: auto;")
+        div.align-items-center.p-3.px-md-4.mb-3.border-bottom.box-shadow(style="display:inline-block; width:100%; position: relative;") 
+          h2.txt2(style="float: left; font-size: 22px; margin:0;") hello, #{user_fname} #{user_lname}
+          nav
+            a.txt2(href="/login" style="float: right; font-size: 22px;") logout
+              
+        .container(id="dash")
+            div(style="padding-top:30px; padding-bottom:30px")
+              div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                h2.txt2(style="float: left; font-size: 22px;") current tasks 
+              table.txt1.table.table-striped
+                  thead.thead-light
+                      tr
+                          th title
+                          th description
+                          th tutor
+                          th is complete
+                  tbody
+                      each item in items
+                          tr
+                              td #{item.title}
+                              td #{item.description}
+                              td #{item.fname} #{item.lname}
+                              td #{item.iscomplete}
+                                form(action="/items/complete", style="float: right", method="post")
+                                  input(hidden, name="task_id", value= item.item_id)
+                                  button(
+                                      type="submit"
+                                      style="float:right;")
+                                      i.fa.fa-check(aria-hidden='true')
+            div(style="padding-top:30px; padding-bottom:30px")
+              div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                h2.txt2(style="float: left; font-size: 22px;") current tutors
+              table.txt1.table.table-striped
+                  thead.thead-light
+                      tr
+                          th first name
+                          th last name
+                          th email
+                  tbody
+                      each item in assignments
+                          tr
+                              td #{item.tutor_fname}
+                              td #{item.tutor_lname}
+                              td #{item.fname} #{item.tutor_email}
+  
+        script(src='/vendor/jquery/jquery-3.2.1.min.js')
+        script(src='/vendor/bootstrap/js/popper.js')
+        script(src='/vendor/bootstrap/js/bootstrap.min.js')
+        script(src='/vendor/select2/select2.min.js')
+        script(src='/js/main.js')

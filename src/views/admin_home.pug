@@ -1,0 +1,244 @@
+block variables
+  - var title = 'To Do List - Home'
+doctype html
+html(lang='en')
+  head
+    title Login V1
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    link(rel='icon', type='image/png', href='/images/icons/favicon.ico')
+    link(rel='stylesheet', type='text/css', href='/vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/animate/animate.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/css-hamburgers/hamburgers.min.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/select2/select2.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/util.css')
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js", integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM", crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js", integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o", crossorigin="anonymous")
+
+    link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+    title #{title}
+  body    
+   .limiter
+    .container-login100
+     .wrap-login100(style="min-width: 753px; min-height: 860px; display: block; width: auto;")
+        div.align-items-center.p-3.px-md-4.mb-3.border-bottom.box-shadow(style="display:inline-block; width:100%; position: relative;") 
+          h2.txt2(style="float: left; font-size: 22px; margin:0;") hello, #{user_fname} #{user_lname}
+          nav
+            a.txt2(href="/login" style="float: right; font-size: 22px;") logout
+              
+        .container(id="dash")
+            div(style="padding-top:30px; padding-bottom:30px")
+              div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                h2.txt2(style="float: left; font-size: 22px;") all current tasks 
+                button(
+                  style="border-radius:50%; float:right; height: 100%; width: 34.8px; height: 100%; margin-bottom: .5rem" 
+                  id='submit' 
+                  onclick="document.getElementById('dash').style.display='none'; document.getElementById('create_item_dash').style.display='block'; ")
+                  i.fa.fa-plus(aria-hidden='true')   
+              table.txt1.table.table-striped
+                  thead.thead-light
+                      tr
+                          th title
+                          th description
+                          th tutor id
+                          th tutee id
+                          th is complete
+                  tbody
+                      each item in items
+                          tr
+                              td #{item.title}
+                              td #{item.description}
+                              td #{item.tuttor_id}
+                              td #{item.tuttee_id}
+                              td #{item.iscomplete}
+                                form(action="/items/removeTask", style="float: right", method="post")
+                                  input(hidden, name="task_id", value= item.id)
+                                  button(
+                                      type="submit"
+                                      style="float:right;")
+                                      i.fa.fa-times(aria-hidden='true')
+                        
+            hr
+            div(style="padding-top:30px; padding-bottom:30px;")
+              div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                h2.txt2(style="float: left; font-size: 22px;") all current users  
+                button(
+                  style="border-radius:50%; float:right; height: 100%; width: 34.8px; height: 100%; margin-bottom: .5rem" 
+                  id='submit' 
+                  onclick="document.getElementById('dash').style.display='none'; document.getElementById('create_user_dash').style.display='block'; ")
+                  i.fa.fa-plus(aria-hidden='true')              
+              table.txt1.table.table-striped
+                  thead.thead-light
+                      tr
+                          th id
+                          th first name
+                          th last name
+                          th email
+                          th role
+                  tbody
+                      each user in users
+                          tr
+                              td #{user.id}
+                              td #{user.fname}
+                              td #{user.lname}
+                              td #{user.email}
+                              td #{user.role}   
+                                form(action="/api/auth/removeUser", style="float: right", method="post")
+                                  input(hidden, name="user_id", value= user.id)
+                                  button(
+                                      type="submit"
+                                      style="float:right;")
+                                      i.fa.fa-times(aria-hidden='true')
+
+            hr
+            div(style="padding-top:30px; padding-bottom:30px")
+              div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                h2.txt2(style="float: left; font-size: 22px;") all current assignments   
+                button(
+                  style="border-radius:50%; float:right; height: 100%; width: 34.8px; height: 100%; margin-bottom: .5rem" 
+                  id='submit' 
+                  onclick="document.getElementById('dash').style.display='none'; document.getElementById('create_assignment_dash').style.display='block'; ")
+                   i.fa.fa-plus(aria-hidden='true')
+              table.txt1.table.table-striped
+                  thead.thead-light
+                      tr
+                          th tutor 
+                          th tuttee
+                  tbody
+                      each assignment in assignments
+                          tr
+                              td #{assignment.tutor_id} - #{assignment.tutor_fname} #{assignment.tutor_lname}
+                              td #{assignment.tuttee_id} - #{assignment.tuttee_fname} #{assignment.tuttee_lname}
+                                form(action="/api/auth/removeAssignment", style="float: right", method="post")
+                                  input(hidden, name="tutor_id", value= assignment.tutor_id)
+                                  input(hidden, name="tuttee_id", value= assignment.tuttee_id)
+                                  button(
+                                      type="submit"
+                                      style="float:right;")
+                                      i.fa.fa-times(aria-hidden='true')
+        
+        .container(id="create_item_dash" style="display:none")
+          div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                  nav
+                   a.txt2(
+                    style="float: right; font-size: 22px;" 
+                    href="javascript:;"
+                    onclick="document.getElementById('dash').style.display='block'; document.getElementById('create_item_dash').style.display='none';"
+                    ) back
+                  span.login100-form-title(style="padding-left:54px; line-height: unset; padding-bottom: 0px;")
+                    | create item
+          form.login100-form(action="/items/create_item_admin", method='post' style="margin: auto")
+            .wrap-input100
+              select.input100(name="tuttee_id")
+                option(value=-1) tuttee id
+                each user in current_users
+                  option(value=user.id) #{user.fname} #{user.lname}
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-envelope(aria-hidden='true')
+            .wrap-input100
+              select.input100(name="tutor_id")
+                option(value=-1) tutor id
+                each user in current_tutors
+                  option(value=user.id) #{user.fname} #{user.lname}
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .wrap-input100
+              input.input100(type='text', name='title', placeholder='title')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .wrap-input100
+              input.input100(type='text', name='description', placeholder='description')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .container-login100-form-btn
+              button.login100-form-btn(id='submit' type="submit")
+                | submit
+
+        .container(id="create_user_dash" style="display:none")
+          div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                  nav
+                   a.txt2(
+                    style="float: right; font-size: 22px;" 
+                    href="javascript:;"
+                    onclick="document.getElementById('dash').style.display='block'; document.getElementById('create_user_dash').style.display='none';"
+                    ) back
+                  span.login100-form-title(style="padding-left:54px; line-height: unset; padding-bottom: 0px;")
+                    | create user
+          form.login100-form(action="/api/auth/adminSignup", method='post' style="margin: auto")
+            .wrap-input100
+              input.input100(type='text', name='email', placeholder='email')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-envelope(aria-hidden='true')
+            .wrap-input100
+              input.input100(type='text', name='username', placeholder='username')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .wrap-input100
+              input.input100(type='text', name='fname', placeholder='first name')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .wrap-input100
+              input.input100(type='text', name='lname', placeholder='last name')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-pencil(aria-hidden='true')
+            .wrap-input100
+              select.input100(name="role")
+                option(value=0) user
+                option(value=1) tutor
+                option(value=2) admin
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-lock(aria-hidden='true')
+            .wrap-input100.validate-input(data-validate='password is required')
+              input.input100(type='password', name='password', placeholder='password')
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-lock(aria-hidden='true')
+            .container-login100-form-btn
+              button.login100-form-btn(id='submit' type="submit")
+                | submit
+
+        .container(id="create_assignment_dash" style="display: none")
+          div(style="display:inline-block; width:100%; position: relative; height: 38.4px;") 
+                  nav
+                   a.txt2(
+                    style="float: right; font-size: 22px;" 
+                    href="javascript:;"
+                    onclick="document.getElementById('dash').style.display='block'; document.getElementById('create_assignment_dash').style.display='none';"
+                    ) back
+                  span.login100-form-title(style="padding-left:54px; line-height: unset; padding-bottom: 0px;")
+                    | create assigment
+          form.login100-form(action="/api/auth/createAssignment", method='post' style="margin: auto")
+            .wrap-input100
+              select.input100(name="tuttee_id")
+                option(value=-1) tuttee id
+                each user in current_users
+                  option(value=user.id) #{user.fname} #{user.lname}
+              span.focus-input100
+              span.symbol-input100
+                i.fa.fa-envelope(aria-hidden='true')
+            .wrap-input100
+              select.input100(name="tutor_id")
+                option(value=-1) tutor id
+                each user in current_tutors
+                  option(value=user.id) #{user.fname} #{user.lname}
+            .container-login100-form-btn
+              button.login100-form-btn(id='submit' type="submit")
+                | submit
+        
+        script(src='/vendor/jquery/jquery-3.2.1.min.js')
+        script(src='/vendor/bootstrap/js/popper.js')
+        script(src='/vendor/bootstrap/js/bootstrap.min.js')
+        script(src='/vendor/select2/select2.min.js')
+        script(src='/js/main.js')

@@ -1,0 +1,30 @@
+{
+  "name": "todoapplication",
+  "version": "1.0.0",
+  "description": "A brief Demo Application showcasing using PostgreSQL with Node.Js ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.0",
+    "express-session": "^1.17.0",
+    "http-status": "^0.2.5",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.3",
+    "pug": "^3.0.2",
+    "sequelize": "^5.21.3"
+  },
+  "keywords": [
+    "node js",
+    "jwt",
+    "authentication",
+    "express",
+    "postgresql"
+  ]
+}
